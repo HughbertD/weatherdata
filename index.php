@@ -28,15 +28,20 @@ echo "<pre>";
 $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
 
 $i = 1; //set a count
+$lineNum = 0; //set our lineNumber var now, will begin inc' when required
 foreach($sheetData as $row){
-	echo $i;
-	print_r($row);
+
+	if($i == 4) $headers = array_keys($row); //grab this row, it contains the required header values
+
 	if($i > 6){ //gone past header rows, into data
-		foreach($row as $column => $data){
-			print_r($data);
+		
+		$lineNum += 10;	//inc our line number by 10
+		
+		$formattedData[$lineNum]['t'] = formatTimeStamp($row['A'], $row['C']); //start building our array of data up, to be written to the file
+		foreach($row as $column => $data){	
 		}
-		echo "<hr />";
+
 	}
 	$i++; //inc the count after each iteration
 }
-print_r($sheetData);
+echo "</pre>";
