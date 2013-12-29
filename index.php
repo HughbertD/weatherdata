@@ -56,9 +56,9 @@ if(!$handle){
 foreach($formattedData as $lineNumber => $data){
 	$line = "";
 	foreach($data as $header => $value){
-		$line .= $header.$value." ";  //formats our header:value header:value string
+		$line .= $header.trim($value)." ";  //formats our header:value header:value string
 	}
-	fwrite($handle, str_pad($lineNumber, 5, " ", STR_PAD_LEFT)." ".$line." ".$verificationCode."\r\n"); //write to file, lineNumber is padded left with spaces, as per original file
+	fwrite($handle, str_pad($lineNumber, 5, " ", STR_PAD_LEFT)." ".$line.$verificationCode."\r\n"); //write to file, lineNumber is padded left with spaces, as per original file
 }
 fclose($handle); //close the stream
 
