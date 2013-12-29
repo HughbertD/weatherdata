@@ -31,17 +31,19 @@ $i = 1; //set a count
 $lineNum = 0; //set our lineNumber var now, will begin inc' when required
 foreach($sheetData as $row){
 
-	if($i == 4) $headers = array_keys($row); //grab this row, it contains the required header values
+	if($i == 4) $headers = $row; //grab this row, it contains the required header values
 
 	if($i > 6){ //gone past header rows, into data
 		
-		$lineNum += 10;	//inc our line number by 10
-		
-		$formattedData[$lineNum]['t'] = formatTimeStamp($row['A'], $row['C']); //start building our array of data up, to be written to the file
+		$lineNum += 10;	//inc our line number by 10 (this means lineNumbering STARTS at 10)
 		foreach($row as $column => $data){	
+			if(preg_match("/[a-zA-Z]:/",$headers[$column])){ //match up the column data to its header (e.g. B => t:) and assign to the array
+				$formattedData[$lineNum][$headers[$column]] = $data;
+			}
+			$formattedData[$lineNum]['t:'] = formatTimeStamp($row['A'], $row['C']); //special case, for the timestamp
 		}
-
 	}
 	$i++; //inc the count after each iteration
 }
+print_r($formattedData);
 echo "</pre>";
