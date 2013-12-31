@@ -2,8 +2,11 @@
 
 //Returns a formatted timestamp
 function formatTimeStamp($date, $time){
+
+	 $separator = (strstr($date,'-') === false ? '/' : '-');
+
 	//create vars day,month,year from the elements separated by "-" in our date argument
-	list($month, $day, $year) = explode('-', $date);
+	list($month, $day, $year) = explode($separator, $date);
 
 	//same as above, but with ":"
 	list($hour, $minute) = explode(':', $time);
